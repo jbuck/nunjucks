@@ -262,6 +262,20 @@
                     [nodes.TemplateData, 'hello {{ {% %} }}']]]);
         });
 
+        it('should parse raw without stripping quotes', function() {
+            isAST(parser.parse("{% raw %}{{ 'hello' }}{% endraw %}"),
+                  [nodes.Root,
+                   [nodes.Output,
+                    [nodes.TemplateData, "{{ 'hello' }}"]]]);
+        });
+
+        it('should parse raw without stripping quotes', function() {
+            isAST(parser.parse('{% raw %}{{ "hello" }}{% endraw %}'),
+                  [nodes.Root,
+                   [nodes.Output,
+                    [nodes.TemplateData, '{{ "hello" }}']]]);
+        });
+
         it('should parse keyword and non-keyword arguments', function() {
             isAST(parser.parse('{{ foo("bar", falalalala, baz="foobar") }}'),
                   [nodes.Root,
